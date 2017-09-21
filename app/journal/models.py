@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
 
 class Journal(models.Model):
     title = models.CharField(max_length=30)
@@ -14,3 +13,30 @@ class Journal(models.Model):
 
     def __str__(self):
         return "%s by %s (%s)" % (self.title, self.writer, self.created_at)
+
+    @property
+    def location(self):
+        '''
+        Location of where the entry was posted.
+        City, state, and (maybe) zip code.
+        :return:
+        '''
+        pass
+
+
+    @property
+    def mood(self):
+        '''
+        The overall mood of the entry.
+        :return:
+        '''
+        pass
+
+
+    @property
+    def preview(self):
+        '''
+        Show a preview of the entry.
+        :return:
+        '''
+        pass
