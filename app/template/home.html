@@ -1,1 +1,20 @@
-<h1>Welcome to Journalize!</h1>
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<head>
+    <title>Journalize</title>
+</head>
+<div class="image-container">
+    <div class="app-header" style="text-align: center;">
+        <h1 class="app-title">Journalize</h1>
+        <p class="app-desc">Your very own personalized journal.</p>
+        <a href="{% url "login" %}" class="btn btn-primary">Login</a>
+        <a href="{% url "register" %}" class="btn btn-default">Sign Up</a>
+    </div>
+
+    <img class="home-template-img" src="{% static "images/journal-glasses.jpg" %}" />
+
+</div>
+{% endblock %}

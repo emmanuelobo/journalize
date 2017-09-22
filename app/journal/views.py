@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .forms import JournalForm
 from django.contrib.auth.models import User
 
-# Create your views here.
 
 
 def all_entries(request):
