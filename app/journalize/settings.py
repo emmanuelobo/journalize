@@ -28,7 +28,7 @@ GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCXGrZUwxplOESgBIpH08pX5KHvvjo-zi0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1', 'MannyO.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'journalize.herokuapp.com']
 
 LOGIN_URL = '/login/'
 
@@ -126,6 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collectstatic')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

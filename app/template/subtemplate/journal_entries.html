@@ -9,7 +9,7 @@
 <body>
 
 <div class="main">
-    <h1>Recent Entries</h1>
+    {% if object_list %}
     {% for entry in object_list %}
 
       <div class="row">
@@ -37,6 +37,12 @@
       </div>
 
     {% endfor %}
+    {% else %}
+
+    <h1>No Journal Entries Written Yet ☹</h1>
+    <p>Get started writing awesome Journal Entries today!</p>
+
+    {% endif %}
 </div>
  <a href="{% url "create_entry" %}" class="btn-floating btn-large waves-effect waves-light black add-entry-btn"><i class="material-icons">add</i></a>
 

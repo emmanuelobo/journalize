@@ -1,15 +1,23 @@
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render
 from .forms import JournalForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from .models import Journal
 
 
-class JournalList(ListView):
+class JournalList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Journal
     template_name = "subtemplate/journal_entries.html"
+
+    def get_queryset(self):
+        journals = Journal.objects.filter(writer=self.request.user)
+        return journals
 
 def all_entries(request):
     data = {"entries": request.user.entry_set.all()}
