@@ -8,12 +8,12 @@
 </head>
 
 <body>
-    <form class="form col-md-3" method="post">
-        {% csrf_token %}
-        {{ form }}
+        <form style="margin: auto;margin-top: 10%;" class="form col-md-3" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn" style="margin: auto 33%;" type="submit" value="Login">
+        </form>
 
-        <input type="submit" value="Submit">
-    </form>
 </body>
 
 {% endblock %}

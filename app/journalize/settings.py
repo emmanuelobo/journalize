@@ -22,10 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 's365^=b7v(=9tee)+k365%*bd!mn)^)q8$uzmty*c%3k&l)0t4'
 
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCXGrZUwxplOESgBIpH08pX5KHvvjo-zi0'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1', 'MannyO.pythonanywhere.com']
+
+LOGIN_URL = '/login/'
 
 
 # Application definition
@@ -38,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'journal.apps.JournalConfig',
-    'userprofile.apps.UserprofileConfig'
+    'userprofile.apps.UserprofileConfig',
+    'geoposition'
 ]
 
 MIDDLEWARE = [

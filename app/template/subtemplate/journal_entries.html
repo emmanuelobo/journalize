@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,5 +8,40 @@
 </head>
 <body>
 
+<div class="main">
+    <h1>Recent Entries</h1>
+    {% for entry in object_list %}
+
+      <div class="row">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-image">
+                {% if entry.image %}
+              <img src="{{entry.image}}">
+                {% endif %}
+
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <span class="card-title col-md-7">{{ entry.title }}</span>
+                    <span style="margin-top: 7px;" class="entry-date col-md-5">{{entry.created_at}} </span>
+                </div>
+
+                {{ entry.text }}
+            </div>
+            <div class="card-action">
+              <a href="#">Read</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+</div>
+ <a href="{% url "create_entry" %}" class="btn-floating btn-large waves-effect waves-light black add-entry-btn"><i class="material-icons">add</i></a>
+
+
 </body>
 </html>
+
+{% endblock %}

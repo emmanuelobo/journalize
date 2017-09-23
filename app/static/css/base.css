@@ -30,3 +30,19 @@
     background-color: white;
     color: dark-grey;
 }
+
+.main{
+    margin: 8% 0% 0% 29%;
+    width: 100%;
+}
+
+.add-entry-btn{
+    margin: 9% 0px 0px 90%;
+    position: fixed !important;
+    bottom: 40px;
+}
+
+i.material-icons:hover {
+    color: black;
+    background: white;
+}

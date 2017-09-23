@@ -1,0 +1,1 @@
+web: gunicorn journalize.wsgi --log-file -

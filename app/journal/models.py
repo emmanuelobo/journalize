@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from geoposition.fields import GeopositionField
 
 
 class Journal(models.Model):
@@ -7,9 +8,12 @@ class Journal(models.Model):
     text = models.TextField()
     image = models.ImageField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=False)
+    modified_at = models.DateTimeField(auto_now=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    position = GeopositionField()
 
+    class Meta:
+        ordering = ['-modified_at']
 
     def __str__(self):
         return "%s by %s (%s)" % (self.title, self.writer, self.created_at)

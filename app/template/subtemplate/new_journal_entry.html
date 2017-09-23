@@ -1,13 +1,24 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Write Entry</title>
 </head>
 <body>
-<form method="post">
-    {{ form }}
-    <input type="submit" value="Post Entry" />
-</form>
+
+<div class="main">
+    <form class="col-md-5" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input class="btn" style="float: right;" type="submit" value="Post" />
+    </form>
+</div>
+
 </body>
 </html>
+
+{% endblock content %}

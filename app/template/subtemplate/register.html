@@ -7,10 +7,11 @@
     <title>Register</title>
 </head>
 <body>
-    <form class="form col-md-3" method="post">
+    <form style="margin: auto;margin-top: 5%;" class="form col-md-3" method="post">
         {% csrf_token %}
         {{form}}
-        <input type="submit" value="register">
+        <br>
+        <input class="btn" type="submit" value="register">
     </form>
 </body>
 </html>

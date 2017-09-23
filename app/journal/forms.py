@@ -3,10 +3,6 @@ from .models import Journal
 
 
 class JournalForm(forms.Form):
-    class Meta:
-        model = Journal
-        fields = ['title', 'text', 'image']
-
-    title = forms.CharField(label="Title", widget=forms.TextInput(attrs={'placeholder':'First Day on the Job'}))
-    text = forms.Textarea()
-    image = forms.ImageField()
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Title','class':'form-control'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'What\'s on your mind today?', 'class':'form-control'}))
+    image = forms.ImageField(required=False)
