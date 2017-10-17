@@ -4,9 +4,14 @@
 *.iml
 out
 gen
-.myvenv
-*.pyc
-*.collectstatic
+myvenv
+*app/.pyc
 app/collectstatic
 app/staticfiles
+app/media
 .vscode
+app/Procfile
+app/journal/__pycache__
+app/journalize/__pycache__
+app/userprofile/__pycache__
+app/.__pycache__

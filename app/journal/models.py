@@ -14,6 +14,8 @@ class Journal(models.Model):
 	writer = models.ForeignKey(User, on_delete=models.CASCADE)
 	is_draft = models.BooleanField(default=False)
 	location = models.CharField(max_length=50, null=True)
+	is_favorite = models.BooleanField(default=False)
+	interests = []
 
 	class Meta:
 		ordering = ['-modified_at']
