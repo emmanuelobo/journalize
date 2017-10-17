@@ -43,10 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'journal.apps.JournalConfig',
-    'userprofile.apps.UserprofileConfig',
+    'journal',
+    'userprofile',
     'geoposition',
-    'widget_tweaks'
+    'widget_tweaks',
+    'dashboard',
+    'account',
 ]
 
 MIDDLEWARE = [
