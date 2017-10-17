@@ -1,8 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
-
+.env
 .idea
 *.iml
 out
 gen
 .myvenv
 *.pyc
+*.collectstatic
+app/collectstatic
+app/staticfiles
+.vscode

@@ -1,24 +1,38 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+
+
 {% block content %}
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Write Entry</title>
+    <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
 </head>
 <body>
 
-<div class="main">
-    <form class="col-md-5" method="post">
+<div style="width: 95%; margin: auto;">
+    <form method="post" enctype="multipart/form-data" novalidate >
         {% csrf_token %}
         {{ form }}
         <br>
-        <input class="btn" style="float: right;" type="submit" value="Post" />
+        <input class="btn" style="float: right;" type="submit" value="Publish" />
     </form>
 </div>
-
 </body>
 </html>
 
+
 {% endblock content %}
+
+{% block footer_javascript %}
+<script src= "{% static 'js/simplemde.min.js' %}"></script>
+<script>
+    var simplemde = new SimpleMDE();
+</script>
+
+<script src="{% static 'js/location.js'%}"></script>
+{% endblock %}

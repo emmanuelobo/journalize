@@ -46,3 +46,7 @@ i.material-icons:hover {
     color: black;
     background: white;
 }
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover{
+    height: 148%;
+}

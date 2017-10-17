@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/journal.css" %}" >
+{% endblock head %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drafts</title>
+</head>
+<body>
+
+<div class="">
+    <div class="row">
+    {% if object_list %}
+    {% for entry in object_list %}
+
+
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-image">
+                {% if entry.image %}
+              <img src="/{{entry.image}}">
+                {% endif %}
+
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <span class="card-title col-md-7" style="display: inline-grid">{{ entry.title }}
+                    <span class="read-time">{{ entry.estimated_read_time}} min read</span>
+                    </span>
+
+                    <span style="margin-top: 7px;" class="entry-date col-md-5">{{entry.created_at}} </span>
+                </div>
+
+                {{ entry.preview }}
+            </div>
+            <div class="card-action">
+
+                <a href="{% url 'edit_entry' entry.id %}">Edit</a>
+
+                <a href="{% url 'delete_entry' entry.id %}">Delete</a>
+
+                <a href="{% url 'publish_draft' entry.id %}" class="btn btn-success" style="margin:auto 8%;">Publish</a>
+
+
+            </div>
+          </div>
+        </div>
+
+
+    {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="row" style="display: inline;text-align: center;">
+        <h1>You Currently Have No Drafts</h1>
+    </div>
+
+    {% endif %}
+
+ <a href="{% url "create_entry" %}" class="btn-floating btn-large waves-effect waves-light black add-entry-btn"><i class="material-icons">add</i></a>
+
+
+</body>
+</html>
+
+{% endblock %}

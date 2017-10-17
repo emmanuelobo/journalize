@@ -1,10 +1,32 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Journal Entry</title>
+    <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
 </head>
 <body>
+<div style="width: 95%; margin: auto;">
+    <form method="post" novalidate>
+        {% csrf_token %}
 
+        {{ form }}
+
+        <input type="submit" class="btn" value="Save">
+    </form>
+</div>
 </body>
 </html>
+    <script src= "{% static 'js/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE();
+    </script>
+{% endblock %}
+
+
+
+

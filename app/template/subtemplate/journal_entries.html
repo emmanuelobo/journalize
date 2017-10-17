@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/journal.css" %}" >
+{% endblock head %}
 
 {% block content %}
 <html lang="en">
@@ -8,42 +14,64 @@
 </head>
 <body>
 
-<div class="main">
+<div class="">
+    <div class="row">
     {% if object_list %}
     {% for entry in object_list %}
 
-      <div class="row">
-        <div class="col-md-5">
+
+        <div class="col-md-3">
           <div class="card">
             <div class="card-image">
                 {% if entry.image %}
-              <img src="{{entry.image}}">
+              <img src="/media/{{entry.image}}">
                 {% endif %}
 
             </div>
             <div class="card-content">
                 <div class="row">
-                    <span class="card-title col-md-7">{{ entry.title }}</span>
-                    <span style="margin-top: 7px;" class="entry-date col-md-5">{{entry.created_at}} </span>
+                    <span class="card-title col-md-7" style="display: inline-grid">{{ entry.title }}
+                    <span class="read-time">{{ entry.estimated_read_time}} min read</span>
+                    </span>
+                    {% if entry.is_editted %}
+                        <span style="margin-top: 7px;" class="entry-date col-md-5">{{entry.modified_at|date:"M d, Y @ P"}} (Edited) </span>
+                    {% else %}
+                        <span style="margin-top: 7px;" class="entry-date col-md-5">{{entry.created_at|date:"M d, Y @ P"}} </span>
+                    {% endif %}
+
                 </div>
 
-                {{ entry.text }}
+                <small>{{ entry.preview }}</small>
             </div>
-            <div class="card-action">
-              <a href="#">Read</a>
+              {% if entry.location %}
+              <div class="card-action entry-location">
+                  <i class="material-icons">location_on</i> {{ entry.location }}
+              </div>
+              {% endif %}
+            <div class="card-action" style="text-align: center;">
+
+                <a href="{% url 'view_entry' entry.id %}"><i class="material-icons">visibility</i></a>
+
+                <a href="{% url 'edit_entry' entry.id %}"><i class="material-icons">edit</i></a>
+
+                <a href="{% url 'delete_entry' entry.id %}"><i class="material-icons">delete_forever</i></a>
+
             </div>
           </div>
         </div>
-      </div>
+
 
     {% endfor %}
+        </div>
+    </div>
     {% else %}
-
-    <h1>No Journal Entries Written Yet ☹</h1>
-    <p>Get started writing awesome Journal Entries today!</p>
+    <div class="row" style="display: inline;text-align: center;">
+        <h1>No Journal Entries Written Yet ☹</h1>
+        <p>Get started writing awesome Journal Entries today!</p>
+    </div>
 
     {% endif %}
-</div>
+
  <a href="{% url "create_entry" %}" class="btn-floating btn-large waves-effect waves-light black add-entry-btn"><i class="material-icons">add</i></a>
 
 

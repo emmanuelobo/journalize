@@ -1,0 +1,28 @@
+.main-container{
+    margin: auto;
+    width: 80%;
+}
+
+.journal-title{
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.journal-body{
+    font-size: 18px;
+    font-family: Candara, sans-serif;
+}
+
+.read-time{
+    font-size: 12px;
+    color: rgb(107, 165, 162);
+    font-family: 'Exo', sans-serif;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.entry-location{
+    background-color: rgba(245, 245, 245, 0.5) !important;
+}
