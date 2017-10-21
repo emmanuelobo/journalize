@@ -15,7 +15,6 @@ class Journal(models.Model):
 	is_draft = models.BooleanField(default=False)
 	location = models.CharField(max_length=50, null=True)
 	is_favorite = models.BooleanField(default=False)
-	interests = []
 
 	class Meta:
 		ordering = ['-modified_at']
@@ -73,3 +72,8 @@ class Journal(models.Model):
 
 	def is_editted(self):
 		return self.modified_at > self.created_at
+
+
+class Tag(models.Model):
+	name = models.CharField(max_length=30)
+	journal = models.ForeignKey(Journal(), on_delete=models.CASCADE)
