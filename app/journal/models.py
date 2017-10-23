@@ -77,3 +77,6 @@ class Journal(models.Model):
 class Tag(models.Model):
 	name = models.CharField(max_length=30)
 	journal = models.ForeignKey(Journal(), on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.name

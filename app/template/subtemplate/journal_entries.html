@@ -43,6 +43,14 @@
 
                 <small>{{ entry.preview }}</small>
             </div>
+              {% if entry.tag_set.all %}
+              <div class="card-action entry-tags">
+                {% for tag in entry.tag_set.all %}
+                    <span class="badge badge-dark" style="color: white;margin-bottom: 3px;">{{tag}}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+
               {% if entry.location %}
               <div class="card-action entry-location">
                   <i class="material-icons">location_on</i> {{ entry.location }}

@@ -26,3 +26,8 @@ a:hover{
 .entry-location{
     background-color: rgba(245, 245, 245, 0.5) !important;
 }
+
+.entry-tags{
+    background-color: rgba(249, 249, 249, 0.99) !important;
+    float: left;
+}
