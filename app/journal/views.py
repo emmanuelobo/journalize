@@ -7,7 +7,7 @@ from geopy import Nominatim
 from .forms import JournalForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
-from .models import Journal
+from .models import Journal, Tag
 
 
 class JournalList(LoginRequiredMixin, ListView):
@@ -82,6 +82,7 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 		journal = form.save(commit=False)
 		journal.writer = self.request.user
 		coordinates = form.cleaned_data['location']
+		tags = form.cleaned_data['tags']
 		locator = Nominatim()
 		print(locator.reverse(coordinates).raw['address'])
 		try:
@@ -111,6 +112,10 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 				journal.location = location
 
 		journal.save()
+		print("Tags: {}".format(tags))
+		for tag in tags.split('|'):
+			Tag.objects.create(name=tag, journal=journal)
+
 		return HttpResponseRedirect(reverse('entries'))
 
 	def form_invalid(self, form):

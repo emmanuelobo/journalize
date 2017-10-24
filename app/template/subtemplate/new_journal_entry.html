@@ -2,8 +2,6 @@
 
 {% load static %}
 
-
-
 {% block content %}
 
 <html lang="en">
@@ -11,6 +9,7 @@
     <meta charset="UTF-8">
     <title>Write Entry</title>
     <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/taggle.min.css' %}">
 </head>
 <body>
 
@@ -19,8 +18,20 @@
         {% csrf_token %}
         {{ form }}
         <br>
-        <input class="btn" style="float: right;" type="submit" value="Publish" />
+        <input class="btn" style="float: right;
+                                    text-decoration: none;
+                                    color: #fff;
+                                    background-color: #26a69a;
+                                    text-align: center;
+                                    letter-spacing: .5px;
+                                    -webkit-transition: .2s ease-out !important;
+                                    transition: .2s ease-out;
+                                    cursor: pointer;
+                                    width: 100px;
+                                    padding: 0;
+                                    border-radius: 0;" type="submit" value="Publish" />
     </form>
+    <div id="entry-tags-section"></div>
 </div>
 </body>
 </html>
@@ -30,9 +41,16 @@
 
 {% block footer_javascript %}
 <script src= "{% static 'js/simplemde.min.js' %}"></script>
+<script src="{% static 'js/location.js'%}"></script>
+<script src="{% static 'js/taggle.js'%}"></script>
 <script>
     var simplemde = new SimpleMDE();
+    var taggle = new Taggle('entry-tags-section', {
+        duplicateTagClass: 'bounce'
+    });
+    $('form').on('submit', function(){
+        taggle.tag['values'].join('|')
+        $('#id_tags').val(taggle.tag['values'].join('|'));
+        });
 </script>
-
-<script src="{% static 'js/location.js'%}"></script>
 {% endblock %}

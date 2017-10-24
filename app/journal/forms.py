@@ -9,6 +9,7 @@ class JournalForm(ModelForm):
     text = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'What\'s on your mind today?', 'style': 'width:100%; height:150px;margin-bottom: 30px;font-size:40px;', 'class': 'form-control'}))
     image = forms.ImageField(required=False)
     location = forms.CharField(required=False, widget=forms.TextInput(attrs={'type': 'hidden'}))
+    tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'type': 'hidden'}))
 
     class Meta:
         model = Journal
