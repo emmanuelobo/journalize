@@ -26,4 +26,23 @@ class PublishJournalTests(PublishJournalTestsSetUp, TestCase):
 		url = reverse('create_entry')
 		data = {'title': '', 'text': '', 'image': '', 'location': ''}
 		response = self.client.post(url, data)
-		self.assertRedirects(response, reverse('create_entry'))
+		self.assertRedirects(response, url)
+
+	def test_successful_form_post_redirect(self):
+		url, create_url = reverse('entries'), reverse('create_entry')
+		data = {'title': 'Test Title', 'text': 'testing...', 'image': '', 'location': '36.23434, 53.44343', 'tags': ''}
+		response = self.client.post(create_url, data)
+		self.assertRedirects(response, url)
+		response = self.client.get(url)
+
+		# Test Entry Properties after Published
+		self.assertContains(response, "Test Title")
+		self.assertContains(response, "testing...")
+
+
+class DraftJournalEntriesSetUp(TestCase):
+	pass
+
+
+
+
