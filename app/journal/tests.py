@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
+from journal.forms import JournalForm
 
 
-class PublishJournalTestsSetUp(TestCase):
+class JournalTestsSetUp(TestCase):
 	def setUp(self):
 		self.credentials = {
 			'username': 'testuser',
@@ -16,11 +17,30 @@ class PublishJournalTestsSetUp(TestCase):
 		self.client.post(url, data=self.credentials)
 
 
-class PublishJournalTests(PublishJournalTestsSetUp, TestCase):
+class JournalTests(JournalTestsSetUp, TestCase):
 	def test_navigate_to_create_entry_url(self):
 		url = reverse('create_entry')
 		response = self.client.get(url)
 		self.assertEquals(response.status_code, 200)
+
+	def test_contains_journal_form(self):
+		url = reverse('create_entry')
+		response = self.client.get(url)
+		form = response.context.get('form')
+		self.assertIsInstance(form, JournalForm)
+		self.assertFalse(form.is_bound)
+
+	def test_journal_creation_form_inputs(self):
+		url = reverse('create_entry')
+		response = self.client.get(url)
+		self.assertContains(response, '<input', 6)
+		self.assertContains(response, 'id="id_title"', 1)
+		self.assertContains(response, 'id="id_text"', 1)
+		self.assertContains(response, 'id="id_image"', 1)
+		self.assertContains(response, 'id="id_location"', 1)
+		self.assertContains(response, 'id="id_tags"', 1)
+		self.assertContains(response, 'required', 2)
+
 
 	def test_invalid_form_post_redirects(self):
 		url = reverse('create_entry')
@@ -36,12 +56,12 @@ class PublishJournalTests(PublishJournalTestsSetUp, TestCase):
 		response = self.client.get(url)
 
 		# Test Entry Properties after Published
-		self.assertContains(response, "Test Title")
-		self.assertContains(response, "testing...")
+		self.assertContains(response, data['title'])
+		self.assertContains(response, data['text'])
+		self.assertContains(response, 'min read', 1)
 
-
-class DraftJournalEntriesSetUp(TestCase):
-	pass
+	def test_save_entry_as_draft(self):
+		pass
 
 
 
