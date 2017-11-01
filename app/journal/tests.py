@@ -1,4 +1,6 @@
 import time
+
+from decouple import config
 from django.contrib.auth.models import User
 from django.test import TestCase, LiveServerTestCase
 from django.urls import reverse
@@ -43,7 +45,6 @@ class JournalTests(JournalTestsSetUp, TestCase):
 		self.assertContains(response, 'id="id_tags"', 1)
 		self.assertContains(response, 'required', 2)
 
-
 	def test_invalid_form_post_redirects(self):
 		url = reverse('create_entry')
 		data = {'title': '', 'text': '', 'image': '', 'location': ''}
@@ -65,10 +66,11 @@ class JournalTests(JournalTestsSetUp, TestCase):
 	def test_save_entry_as_draft(self):
 		pass
 
+
 class PublishEntryAutomatedTests(LiveServerTestCase):
 	def setUp(self):
 		from selenium import webdriver
-		self.selenium = webdriver.Chrome('C:\/Users\Emmanuel\Downloads\chromedriver_win32\chromedriver.exe')
+		self.selenium = webdriver.Chrome(config('CHROMEDRIVER'))
 
 	def tearDown(self):
 		self.selenium.quit()
@@ -81,8 +83,8 @@ class PublishEntryAutomatedTests(LiveServerTestCase):
 		password = selenium.find_element_by_id('id_password')
 		submit = selenium.find_element_by_class_name('btn')
 
-		username.send_keys('jon')
-		password.send_keys('pass1234')
+		username.send_keys(config('TESTUSERNAME'))
+		password.send_keys(config('TESTPASSWORD'))
 		submit.submit()
 
 		time.sleep(5)
@@ -102,9 +104,3 @@ class PublishEntryAutomatedTests(LiveServerTestCase):
 
 		title.send_keys('Testing Title')
 		submit.submit()
-
-
-
-
-
-
