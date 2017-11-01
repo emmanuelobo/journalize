@@ -1,7 +1,9 @@
+import time
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
 from django.urls import reverse
 from journal.forms import JournalForm
+from selenium.webdriver.common.keys import Keys
 
 
 class JournalTestsSetUp(TestCase):
@@ -62,6 +64,46 @@ class JournalTests(JournalTestsSetUp, TestCase):
 
 	def test_save_entry_as_draft(self):
 		pass
+
+class PublishEntryAutomatedTests(LiveServerTestCase):
+	def setUp(self):
+		from selenium import webdriver
+		self.selenium = webdriver.Chrome('C:\/Users\Emmanuel\Downloads\chromedriver_win32\chromedriver.exe')
+
+	def tearDown(self):
+		self.selenium.quit()
+
+	def test_automated_entry_creation(self):
+		selenium = self.selenium
+		selenium.get('http://127.0.0.1:8000/login')
+
+		username = selenium.find_element_by_id('id_username')
+		password = selenium.find_element_by_id('id_password')
+		submit = selenium.find_element_by_class_name('btn')
+
+		username.send_keys('jon')
+		password.send_keys('pass1234')
+		submit.submit()
+
+		time.sleep(5)
+
+		create_btn = selenium.find_element_by_class_name('btn-floating')
+
+		create_btn.click()
+
+		time.sleep(3)
+
+		assert 'Publish' in selenium.page_source
+
+		title = selenium.find_element_by_id('id_title')
+		submit = selenium.find_element_by_class_name('btn')
+
+		time.sleep(3)
+
+		title.send_keys('Testing Title')
+		submit.submit()
+
+
 
 
 
