@@ -1,11 +1,8 @@
-import time
-
-from decouple import config
 from django.contrib.auth.models import User
 from django.test import TestCase, LiveServerTestCase
 from django.urls import reverse
 from journal.forms import JournalForm
-from selenium.webdriver.common.keys import Keys
+from journal.models import Journal
 
 
 class JournalTestsSetUp(TestCase):
@@ -19,6 +16,11 @@ class JournalTestsSetUp(TestCase):
 		# Login to the app
 		url = reverse('login')
 		self.client.post(url, data=self.credentials)
+
+	def create_entry(self):
+		create_url = reverse('create_entry')
+		data = {'title': 'Test Title', 'text': 'testing...', 'image': '', 'location': '36.23434, 53.44343', 'tags': ''}
+		self.client.post(create_url, data)
 
 
 class JournalTests(JournalTestsSetUp, TestCase):
@@ -58,49 +60,53 @@ class JournalTests(JournalTestsSetUp, TestCase):
 		self.assertRedirects(response, url)
 		response = self.client.get(url)
 
-		# Test Entry Properties after Published
+		# Test Entry Fields after Published
 		self.assertContains(response, data['title'])
 		self.assertContains(response, data['text'])
 		self.assertContains(response, 'min read', 1)
 
+	def test_journal_list_view(self):
+		super().create_entry()
+		url = reverse('entries')
+		response = self.client.get(url)
+		entries = response.context['entries']
+		self.assertEqual(len(entries), 1)
+
+	def test_preview_journal_entry(self):
+		super().create_entry()
+		url = reverse('view_entry', kwargs={'id': 1})
+		response = self.client.get(url)
+		entry = response.context['entry']
+		self.assertEquals(response.status_code, 200)
+		self.assertIsInstance(entry, Journal)
+		self.assertContains(response, entry.title)
+		self.assertContains(response, entry.text)
+
+	def test_navigate_to_drafts(self):
+		url = reverse('drafts')
+		response = self.client.get(url)
+		self.assertEquals(response.status_code, 200)
+
+	def test_empty_drafts_list(self):
+		url = reverse('drafts')
+		response = self.client.get(url)
+		drafts = response.context['object_list']
+		self.assertEquals(len(drafts), 0)
+
 	def test_save_entry_as_draft(self):
 		pass
 
+	def test_delete_draft_entry(self):
+		pass
 
-class PublishEntryAutomatedTests(LiveServerTestCase):
-	def setUp(self):
-		from selenium import webdriver
-		self.selenium = webdriver.Chrome(config('CHROMEDRIVER'))
+	def test_edit_draft_entry(self):
+		pass
 
-	def tearDown(self):
-		self.selenium.quit()
+	def test_delete_journal_entry(self):
+		pass
 
-	def test_automated_entry_creation(self):
-		selenium = self.selenium
-		selenium.get('http://127.0.0.1:8000/login')
+	def test_edit_journal_entry(self):
+		pass
 
-		username = selenium.find_element_by_id('id_username')
-		password = selenium.find_element_by_id('id_password')
-		submit = selenium.find_element_by_class_name('btn')
-
-		username.send_keys(config('TESTUSERNAME'))
-		password.send_keys(config('TESTPASSWORD'))
-		submit.submit()
-
-		time.sleep(5)
-
-		create_btn = selenium.find_element_by_class_name('btn-floating')
-
-		create_btn.click()
-
-		time.sleep(3)
-
-		assert 'Publish' in selenium.page_source
-
-		title = selenium.find_element_by_id('id_title')
-		submit = selenium.find_element_by_class_name('btn')
-
-		time.sleep(3)
-
-		title.send_keys('Testing Title')
-		submit.submit()
+	def test_filter_entries_by_tag(self):
+		pass

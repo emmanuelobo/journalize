@@ -14,6 +14,7 @@ class JournalList(LoginRequiredMixin, ListView):
 	login_url = '/login/'
 	redirect_field_name = 'redirect_to'
 
+	context_object_name = "entries"
 	model = Journal
 	template_name = "subtemplate/journal_entries.html"
 
