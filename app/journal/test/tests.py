@@ -3,6 +3,7 @@ from django.test import TestCase, LiveServerTestCase
 from django.urls import reverse
 from journal.forms import JournalForm
 from journal.models import Journal
+from journal.models import Tag
 
 
 class JournalTestsSetUp(TestCase):
@@ -19,8 +20,13 @@ class JournalTestsSetUp(TestCase):
 
 	def create_entry(self):
 		create_url = reverse('create_entry')
-		data = {'title': 'Test Title', 'text': 'testing...', 'image': '', 'location': '36.23434, 53.44343', 'tags': ''}
+		data = {'title': 'Test Title', 'text': 'testing...', 'image': '', 'location': '36.23434, 53.44343', 'tags': 'test'}
 		self.client.post(create_url, data)
+
+	def get_single_tag(self):
+		self.create_entry()
+		tag = Tag.objects.get(id=1)
+		return tag.name
 
 
 class JournalTests(JournalTestsSetUp, TestCase):
@@ -92,6 +98,29 @@ class JournalTests(JournalTestsSetUp, TestCase):
 		response = self.client.get(url)
 		drafts = response.context['object_list']
 		self.assertEquals(len(drafts), 0)
+		self.assertContains(response, 'You Don\'t Have Any Drafts At The Moment')
+
+	def test_no_entries(self):
+		url = reverse('entries')
+		response = self.client.get(url)
+		entries = response.context['entries']
+		self.assertEquals(len(entries), 0)
+		self.assertContains(response, 'No Journal Entries Written Yet ☹')
+		self.assertContains(response, 'Get started writing awesome Journal Entries today!')
+
+	def test_edit_journal_entry(self):
+		super().create_entry()
+		url = reverse('edit_entry', kwargs={'id': 1})
+		entry = Journal.objects.get(id=1)
+		response = self.client.get(url)
+		self.assertEquals(response.status_code, 200)
+		form = response.context['form']
+		self.assertIsNotNone(form)
+		self.assertIsInstance(form, JournalForm)
+		self.assertFalse(form.is_bound)
+		self.assertTrue(form.is_valid)
+		self.assertContains(response, entry.title)
+		self.assertContains(response, entry.text)
 
 	def test_save_entry_as_draft(self):
 		pass
@@ -105,8 +134,12 @@ class JournalTests(JournalTestsSetUp, TestCase):
 	def test_delete_journal_entry(self):
 		pass
 
-	def test_edit_journal_entry(self):
-		pass
-
 	def test_filter_entries_by_tag(self):
-		pass
+		tag = super().get_single_tag()
+		url = reverse('tag_filter', kwargs={'tags': tag})
+		response = self.client.get(url)
+		self.assertContains(response, 'Filter Tags: {}'.format(tag))
+		entries = response.context['entries']
+		self.assertGreater(len(entries), 0)
+
+
