@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Filter By Tags</title>
+</head>
+<body>
+<h1>Filter Tags: {{tag}}</h1>
+{% for entry in entries %}
+<ul>
+    <li>{{ entry.title }}</li>
+</ul>
+{% endfor %}
+</body>
+
+{% endblock content %}

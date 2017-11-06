@@ -131,6 +131,17 @@ class EntryView(DetailView):
 	template_name = 'subtemplate/journal_entry.html'
 
 
+def filter_journal_tags(request, tag):
+	all_entries = Journal.objects.all()
+	entries = []
+	for entry in all_entries:
+		if entry.filter_by_tag(tag) is not None:
+			entries.append(entry)
+
+	data = {'entries': entries, 'tag': tag}
+	return render(request, 'subtemplate/filter_tags.html', data)
+
+
 def delete_entry(request, id):
 	Journal.objects.get(id=id).delete()
 	return HttpResponseRedirect(reverse('entries'))

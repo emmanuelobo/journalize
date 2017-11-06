@@ -136,10 +136,18 @@ class JournalTests(JournalTestsSetUp, TestCase):
 
 	def test_filter_entries_by_tag(self):
 		tag = super().get_single_tag()
-		url = reverse('tag_filter', kwargs={'tags': tag})
+		url = reverse('filter_tags', kwargs={'tag': tag})
 		response = self.client.get(url)
 		self.assertContains(response, 'Filter Tags: {}'.format(tag))
 		entries = response.context['entries']
 		self.assertGreater(len(entries), 0)
+
+	def test_no_results_for_filtered_tag(self):
+		url = reverse('filter_tags', kwargs={'tag': 'random tag'})
+		response = self.client.get(url)
+		entries = response.context['entries']
+		self.assertContains(response, 'No Results Found')
+		self.assertContains(response, 'Return Home')
+		self.assertEquals(len(entries),0)
 
 

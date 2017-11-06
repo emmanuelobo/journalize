@@ -73,6 +73,11 @@ class Journal(models.Model):
 	def is_editted(self):
 		return self.modified_at > self.created_at
 
+	def filter_by_tag(self, tag_name):
+		for tag in self.tag_set.all():
+			if tag.name == tag_name:
+				return self
+
 
 class Tag(models.Model):
 	name = models.CharField(max_length=30)

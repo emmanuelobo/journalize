@@ -79,5 +79,4 @@ class PublishEntryAutomatedTests(LiveServerTestCase):
 		time.sleep(5)
 
 		assert input_title in selenium.page_source
-
 		assert input_text in selenium.page_source

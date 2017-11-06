@@ -46,7 +46,7 @@
               {% if entry.tag_set.all %}
               <div class="card-action entry-tags">
                 {% for tag in entry.tag_set.all %}
-                    <span class="badge badge-dark" style="color: white;margin-bottom: 3px;">{{tag}}</span>
+                    <a href="{% url 'filter_tags' tag.name %}"><span class="badge badge-dark" style="color: white;margin-bottom: 3px;">{{tag}}</span></a>
                 {% endfor %}
               </div>
               {% endif %}
