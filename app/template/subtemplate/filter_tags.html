@@ -6,12 +6,20 @@
     <title>Filter By Tags</title>
 </head>
 <body>
-<h1>Filter Tags: {{tag}}</h1>
-{% for entry in entries %}
-<ul>
-    <li>{{ entry.title }}</li>
-</ul>
-{% endfor %}
+<div class="container">
+    {% if entries %}
+    <h1>Filter Tags: {{tag}}</h1>
+    {% for entry in entries %}
+    <ul>
+        <li>{{ entry.title }}</li>
+    </ul>
+    {% endfor %}
+
+    {% else %}
+    <h1>No Results Found</h1>
+    <a href="{% url 'entries' %}" class="btn btn-primary">Return Home</a>
+    {% endif %}
+</div>
 </body>
 
 {% endblock content %}

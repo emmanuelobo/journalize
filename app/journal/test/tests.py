@@ -140,6 +140,7 @@ class JournalTests(JournalTestsSetUp, TestCase):
 		response = self.client.get(url)
 		self.assertContains(response, 'Filter Tags: {}'.format(tag))
 		entries = response.context['entries']
+		print(response.context)
 		self.assertGreater(len(entries), 0)
 
 	def test_no_results_for_filtered_tag(self):
@@ -148,6 +149,6 @@ class JournalTests(JournalTestsSetUp, TestCase):
 		entries = response.context['entries']
 		self.assertContains(response, 'No Results Found')
 		self.assertContains(response, 'Return Home')
-		self.assertEquals(len(entries),0)
+		self.assertEquals(len(entries), 0)
 
 

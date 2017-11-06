@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile, File
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -45,6 +46,7 @@ class EditEntry(UpdateView):
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.writer = self.request.user
+		self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
 		self.object.save()
 		return super(EditEntry, self).form_valid(form)
 

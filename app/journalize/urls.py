@@ -30,4 +30,4 @@ urlpatterns = [
     url(r'^register/$', profile_views.register, name="register"),
     url(r'^logout/$', profile_views.user_logout, name="logout"),
     url(r'^entry/', include(entry_urls))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
