@@ -11,7 +11,7 @@
 </head>
 <body>
 <div style="width: 95%; margin: auto;">
-    <form method="post" novalidate>
+    <form  enctype="multipart/form-data" method="post" novalidate>
         {% csrf_token %}
 
         {{ form }}

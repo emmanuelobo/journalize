@@ -1,12 +1,14 @@
+import os
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.files.base import ContentFile, File
+from django.core.files import File
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from geopy import Nominatim
 
+from journalize.settings import BASE_DIR, MEDIA_URL
 from .forms import JournalForm
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import Journal, Tag
 
@@ -46,7 +48,11 @@ class EditEntry(UpdateView):
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.writer = self.request.user
-		self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
+		# self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
+		form.clean()
+		self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
+		print(form.cleaned_data['image'])
+		# self.object.image.path = '/media/BoardWalk.jpeg'
 		self.object.save()
 		return super(EditEntry, self).form_valid(form)
 
