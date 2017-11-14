@@ -49,9 +49,9 @@ class EditEntry(UpdateView):
 		self.object = form.save(commit=False)
 		self.object.writer = self.request.user
 		# self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
-		form.clean()
-		self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
-		print(form.cleaned_data['image'])
+		# form.clean()
+		# self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
+		# print(form.cleaned_data['image'])
 		# self.object.image.path = '/media/BoardWalk.jpeg'
 		self.object.save()
 		return super(EditEntry, self).form_valid(form)

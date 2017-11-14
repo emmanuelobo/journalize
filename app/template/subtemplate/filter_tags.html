@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/journal.css" %}" >
+{% endblock head %}
 
 {% block content %}
 <head>
@@ -6,20 +11,17 @@
     <title>Filter By Tags</title>
 </head>
 <body>
-<div class="container">
     {% if entries %}
     <h1>Filter Tags: {{tag}}</h1>
-    {% for entry in entries %}
-    <ul>
-        <li>{{ entry.title }}</li>
-    </ul>
-    {% endfor %}
+
+    <div class="row">
+        {% include "includes/entries.html" %}
+    </div>
 
     {% else %}
     <h1>No Results Found</h1>
     <a href="{% url 'entries' %}" class="btn btn-primary">Return Home</a>
     {% endif %}
-</div>
 </body>
 
 {% endblock content %}
