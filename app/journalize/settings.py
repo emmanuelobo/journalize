@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'journalize.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USERNAME'),
+        'PASSWORD': config('DB_PASSWORD'),
         'HOST': '',
-        'PORT': '3000'
+        'PORT': config('DB_PORT')
     }
 }
 
