@@ -17,11 +17,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import *
 from django.conf.urls.static import static
-from django.contrib import admin
 
+from django.contrib import admin
 from . import views
 from userprofile import views as profile_views
 from journal.urls import entry_urls
+from account.urls import account_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,5 +30,7 @@ urlpatterns = [
     url(r'^login/$', profile_views.user_login, name="login"),
     url(r'^register/$', profile_views.register, name="register"),
     url(r'^logout/$', profile_views.user_logout, name="logout"),
-    url(r'^entry/', include(entry_urls))
+    url(r'^entry/', include(entry_urls)),
+    url(r'^account/', include(account_urls)),
+    # url(r'^dashboard/', include())
 ]
