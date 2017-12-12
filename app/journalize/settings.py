@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os, django_heroku
 from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,15 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 's365^=b7v(=9tee)+k365%*bd!mn)^)q8$uzmty*c%3k&l)0t4'
 
 
-GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCXGrZUwxplOESgBIpH08pX5KHvvjo-zi0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'journalize.herokuapp.com']
 
 LOGIN_URL = '/login/'
 
@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'journalize.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USERNAME'),
-        'PASSWORD': config('DB_PASSWORD'),
+        'NAME': 'journalize',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
         'HOST': '',
-        'PORT': config('DB_PORT')
+        'PORT': 3000
     }
 }
 
@@ -144,3 +144,5 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+django_heroku.settings(locals())
