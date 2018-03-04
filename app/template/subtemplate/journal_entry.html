@@ -15,7 +15,15 @@
 <body>
     <div class="main-container">
         <div class="journal-title">
-            <h1>{{entry.title}}</h1>
+            {% if entry.image %}
+            <div class="header">
+                <img src="\media\{{entry.image}}" width="600" height="400" alt="image" style="margin-top: 20px;">
+                <h1 class="entry-title">{{entry.title}}</h1>
+            </div>
+            {% else %}
+                <h1>{{entry.title}}</h1>
+            {% endif %}
+
         </div>
 
         <div class="journal-body">

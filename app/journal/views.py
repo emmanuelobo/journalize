@@ -123,7 +123,10 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 		journal.save()
 		print("Tags: {}".format(tags))
 		for tag in tags.split('|'):
-			Tag.objects.create(name=tag, journal=journal)
+			if len(tag.split()) == 0:
+				pass
+			else:
+				Tag.objects.create(name=tag, journal=journal)
 
 		return HttpResponseRedirect(reverse('entries'))
 
