@@ -8,14 +8,12 @@ import geoposition.fields
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0003_auto_20170922_2148'),
-    ]
+    dependencies = [("journal", "0003_auto_20170922_2148")]
 
     operations = [
         migrations.AlterField(
-            model_name='journal',
-            name='position',
+            model_name="journal",
+            name="position",
             field=geoposition.fields.GeopositionField(max_length=42),
-        ),
+        )
     ]

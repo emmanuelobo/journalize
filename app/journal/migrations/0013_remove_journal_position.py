@@ -7,13 +7,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0012_auto_20171011_2049'),
-    ]
+    dependencies = [("journal", "0012_auto_20171011_2049")]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='journal',
-            name='position',
-        ),
-    ]
+    operations = [migrations.RemoveField(model_name="journal", name="position")]

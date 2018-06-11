@@ -23,11 +23,10 @@ class Profile(models.Model):
         if deleted:
             Profile.objects.delete(user=instance)
 
-
     @property
     def age(self):
-        '''
+        """
         Age of user based on user's  birth date
         :return:
-        '''
+        """
         pass

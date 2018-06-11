@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0016_journal_location'),
-    ]
+    dependencies = [("journal", "0016_journal_location")]
 
     operations = [
         migrations.AddField(
-            model_name='journal',
-            name='is_favorite',
+            model_name="journal",
+            name="is_favorite",
             field=models.BooleanField(default=False),
-        ),
+        )
     ]

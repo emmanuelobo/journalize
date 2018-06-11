@@ -8,19 +8,17 @@ import geoposition.fields
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0002_journal_image'),
-    ]
+    dependencies = [("journal", "0002_journal_image")]
 
     operations = [
         migrations.AddField(
-            model_name='journal',
-            name='position',
+            model_name="journal",
+            name="position",
             field=geoposition.fields.GeopositionField(max_length=42, null=True),
         ),
         migrations.AlterField(
-            model_name='journal',
-            name='modified_at',
+            model_name="journal",
+            name="modified_at",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

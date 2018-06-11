@@ -7,10 +7,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0020_tag'),
-        ('journal', '0019_auto_20171017_2334'),
-    ]
+    dependencies = [("journal", "0020_tag"), ("journal", "0019_auto_20171017_2334")]
 
-    operations = [
-    ]
+    operations = []

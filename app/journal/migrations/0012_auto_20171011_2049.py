@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0011_auto_20171011_2048'),
-    ]
+    dependencies = [("journal", "0011_auto_20171011_2048")]
 
     operations = [
         migrations.AlterField(
-            model_name='journal',
-            name='image',
-            field=models.ImageField(null=True, upload_to=''),
-        ),
+            model_name="journal",
+            name="image",
+            field=models.ImageField(null=True, upload_to=""),
+        )
     ]

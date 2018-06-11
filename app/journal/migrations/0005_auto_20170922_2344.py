@@ -7,13 +7,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0004_auto_20170922_2152'),
-    ]
+    dependencies = [("journal", "0004_auto_20170922_2152")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='journal',
-            options={'ordering': ['modified_at']},
-        ),
+            name="journal", options={"ordering": ["modified_at"]}
+        )
     ]

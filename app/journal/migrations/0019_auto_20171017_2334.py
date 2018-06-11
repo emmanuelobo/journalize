@@ -7,13 +7,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0018_interest'),
-    ]
+    dependencies = [("journal", "0018_interest")]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='Interest',
-            new_name='Tag',
-        ),
-    ]
+    operations = [migrations.RenameModel(old_name="Interest", new_name="Tag")]

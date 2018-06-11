@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0007_auto_20171005_2024'),
-    ]
+    dependencies = [("journal", "0007_auto_20171005_2024")]
 
     operations = [
         migrations.AddField(
-            model_name='journal',
-            name='is_draft',
+            model_name="journal",
+            name="is_draft",
             field=models.BooleanField(default=True),
-        ),
+        )
     ]

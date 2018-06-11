@@ -7,16 +7,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0018_tag'),
-    ]
+    dependencies = [("journal", "0018_tag")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='tag',
-            name='journal',
-        ),
-        migrations.DeleteModel(
-            name='Tag',
-        ),
+        migrations.RemoveField(model_name="tag", name="journal"),
+        migrations.DeleteModel(name="Tag"),
     ]

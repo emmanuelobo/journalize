@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('journal', '0015_journal_is_draft'),
-    ]
+    dependencies = [("journal", "0015_journal_is_draft")]
 
     operations = [
         migrations.AddField(
-            model_name='journal',
-            name='location',
+            model_name="journal",
+            name="location",
             field=models.CharField(max_length=50, null=True),
-        ),
+        )
     ]
