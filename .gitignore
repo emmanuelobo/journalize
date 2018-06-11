@@ -5,6 +5,7 @@
 out
 gen
 myvenv
+*.pyc
 *app/.pyc
 app/collectstatic
 app/staticfiles
