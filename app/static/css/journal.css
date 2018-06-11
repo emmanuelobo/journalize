@@ -31,3 +31,8 @@ a:hover{
     background-color: rgba(249, 249, 249, 0.99) !important;
     float: left;
 }
+
+.no-entries{
+    display: inline;
+    text-align: center;
+}

@@ -83,6 +83,7 @@ class PublishEntry(ListView):
 
 class CreateEntry(LoginRequiredMixin, CreateView):
     logging.info("CreateEntry()")
+	print('CreateEntry() using print method')
     login_url = "/login/"
     redirect_field_name = "redirect_to"
     model = Journal
@@ -91,6 +92,7 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         logging.info("inside form_valid() method")
+		print('inside form_valid() using print statement')
         journal = form.save(commit=False)
         journal.writer = self.request.user
         coordinates = form.cleaned_data["location"]
