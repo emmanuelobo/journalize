@@ -13,161 +13,169 @@ from .forms import JournalForm
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import Journal, Tag
 
+logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-4s [%(filename)s:%(lineno)d] %(message)s',
+    datefmt='%d-%m-%Y:%H:%M:%S',
+    level=logging.DEBUG)
+logger = logging.getLogger('journalize')
+
 
 class JournalList(LoginRequiredMixin, ListView):
-    login_url = "/login/"
-    redirect_field_name = "redirect_to"
+	login_url = "/login/"
+	redirect_field_name = "redirect_to"
 
-    context_object_name = "entries"
-    model = Journal
-    template_name = "subtemplate/journal_entries.html"
+	context_object_name = "entries"
+	model = Journal
+	template_name = "subtemplate/journal_entries.html"
+	logger.info('Inside JournalList \n \n')
 
-    def get_queryset(self):
-        journals = Journal.objects.filter(writer=self.request.user, is_draft=False)
-        return journals
+	def get_queryset(self):
+		logger.info('Inside JournalList')
+		journals = Journal.objects.filter(writer=self.request.user, is_draft=False)
+		return journals
 
 
 class JournalDrafts(LoginRequiredMixin, ListView):
-    login_url = "/login/"
-    redirect_field_name = "redirect_to"
+	login_url = "/login/"
+	redirect_field_name = "redirect_to"
 
-    model = Journal
-    template_name = "subtemplate/drafts.html"
+	model = Journal
+	template_name = "subtemplate/drafts.html"
 
-    def get_queryset(self):
-        journals = Journal.objects.filter(writer=self.request.user, is_draft=True)
-        return journals
+	def get_queryset(self):
+		journals = Journal.objects.filter(writer=self.request.user, is_draft=True)
+		return journals
 
 
 class EditEntry(UpdateView):
-    model = Journal
-    template_name = "subtemplate/edit_journal_entry.html"
-    pk_url_kwarg = "id"
-    success_url = reverse_lazy("entries")
-    form_class = JournalForm
+	model = Journal
+	template_name = "subtemplate/edit_journal_entry.html"
+	pk_url_kwarg = "id"
+	success_url = reverse_lazy("entries")
+	form_class = JournalForm
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.writer = self.request.user
-        # self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
-        # form.clean()
-        # self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
-        # print(form.cleaned_data['image'])
-        # self.object.image.path = '/media/BoardWalk.jpeg'
-        self.object.save()
-        return super(EditEntry, self).form_valid(form)
+	def form_valid(self, form):
+		self.object = form.save(commit=False)
+		self.object.writer = self.request.user
+		# self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
+		# form.clean()
+		# self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
+		# print(form.cleaned_data['image'])
+		# self.object.image.path = '/media/BoardWalk.jpeg'
+		self.object.save()
+		return super(EditEntry, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print(form.errors)
-        raise BaseException
+	def form_invalid(self, form):
+		print(form.errors)
+		raise BaseException
 
 
 class PublishEntry(ListView):
-    model = Journal
-    template_name = "subtemplate/drafts.html"
+	model = Journal
+	template_name = "subtemplate/drafts.html"
 
-    def get_queryset(self):
-        id = self.kwargs["id"]
-        published_entry = Journal.objects.get(id=id)
-        published_entry.is_draft = False
-        published_entry.save()
-        journals = Journal.objects.filter(writer=self.request.user, is_draft=True)
-        return journals
+	def get_queryset(self):
+		id = self.kwargs["id"]
+		published_entry = Journal.objects.get(id=id)
+		published_entry.is_draft = False
+		published_entry.save()
+		journals = Journal.objects.filter(writer=self.request.user, is_draft=True)
+		return journals
 
-    def get(self, request, id, *args, **kwargs):
-        published_entry = Journal.objects.get(id=id)
-        published_entry.is_draft = False
-        published_entry.save()
-        return redirect("drafts")
+	def get(self, request, id, *args, **kwargs):
+		published_entry = Journal.objects.get(id=id)
+		published_entry.is_draft = False
+		published_entry.save()
+		return redirect("drafts")
 
 
 class CreateEntry(LoginRequiredMixin, CreateView):
-    logging.info("CreateEntry()")
-	print('CreateEntry() using print method')
-    login_url = "/login/"
-    redirect_field_name = "redirect_to"
-    model = Journal
-    template_name = "subtemplate/new_journal_entry.html"
-    form_class = JournalForm
+	login_url = "/login/"
+	redirect_field_name = "redirect_to"
+	model = Journal
+	template_name = "subtemplate/new_journal_entry.html"
+	form_class = JournalForm
 
-    def form_valid(self, form):
-        logging.info("inside form_valid() method")
-		print('inside form_valid() using print statement')
-        journal = form.save(commit=False)
-        journal.writer = self.request.user
-        coordinates = form.cleaned_data["location"]
-        tags = form.cleaned_data["tags"]
-        locator = Nominatim()
-        print(locator.reverse(coordinates).raw["address"])
-        try:
-            location = "{}, {}".format(
-                locator.reverse(coordinates).raw["address"]["city"],
-                locator.reverse(coordinates).raw["address"]["state"],
-            )
+	def form_valid(self, form):
+		try:
+			logger.info("inside form_valid() method")
+			journal = form.save(commit=False)
+			journal.writer = self.request.user
+			coordinates = form.cleaned_data["location"]
+			tags = form.cleaned_data["tags"]
+			locator = Nominatim()
+			print(locator.reverse(coordinates).raw["address"])
+		except Exception:
+			print('GeocoderInsufficientPrivileges')
 
-        except KeyError:
-            try:
-                location = "{}, {}".format(
-                    locator.reverse(coordinates).raw["address"]["town"],
-                    locator.reverse(coordinates).raw["address"]["state"],
-                )
+		try:
+			location = "{}, {}".format(
+				locator.reverse(coordinates).raw["address"]["city"],
+				locator.reverse(coordinates).raw["address"]["state"],
+			)
 
-            except KeyError:
-                try:
-                    location = "{}, {}".format(
-                        locator.reverse(coordinates).raw["address"]["village"],
-                        locator.reverse(coordinates).raw["address"]["state"],
-                    )
+		except KeyError:
+			try:
+				location = "{}, {}".format(
+					locator.reverse(coordinates).raw["address"]["town"],
+					locator.reverse(coordinates).raw["address"]["state"],
+				)
 
-                except KeyError:
-                    try:
-                        location = "{}, {}".format(
-                            locator.reverse(coordinates).raw["address"]["locality"],
-                            locator.reverse(coordinates).raw["address"]["state"],
-                        )
+			except KeyError:
+				try:
+					location = "{}, {}".format(
+						locator.reverse(coordinates).raw["address"]["village"],
+						locator.reverse(coordinates).raw["address"]["state"],
+					)
 
-                    except KeyError:
-                        location = "{}, {}".format(
-                            locator.reverse(coordinates).raw["address"]["county"],
-                            locator.reverse(coordinates).raw["address"]["state"],
-                        )
+				except KeyError:
+					try:
+						location = "{}, {}".format(
+							locator.reverse(coordinates).raw["address"]["locality"],
+							locator.reverse(coordinates).raw["address"]["state"],
+						)
 
-            if location != "ERROR":
-                journal.location = location
+					except KeyError:
+						location = "{}, {}".format(
+							locator.reverse(coordinates).raw["address"]["county"],
+							locator.reverse(coordinates).raw["address"]["state"],
+						)
 
-        journal.save()
-        print("Tags: {}".format(tags))
-        for tag in tags.split("|"):
-            if len(tag.split()) == 0:
-                pass
-            else:
-                Tag.objects.create(name=tag, journal=journal)
+			if location != "ERROR":
+				journal.location = location
 
-        return HttpResponseRedirect(reverse("entries"))
+		journal.save()
+		print("Tags: {}".format(tags))
+		for tag in tags.split("|"):
+			if len(tag.split()) == 0:
+				pass
+			else:
+				Tag.objects.create(name=tag, journal=journal)
 
-    def form_invalid(self, form):
-        print("Invalid Form")
-        return HttpResponseRedirect(reverse("create_entry"))
+		return HttpResponseRedirect(reverse("entries"))
+
+	def form_invalid(self, form):
+		print("Invalid Form")
+		return HttpResponseRedirect(reverse("create_entry"))
 
 
 class EntryView(DetailView):
-    model = Journal
-    context_object_name = "entry"
-    pk_url_kwarg = "id"
-    template_name = "subtemplate/journal_entry.html"
+	model = Journal
+	context_object_name = "entry"
+	pk_url_kwarg = "id"
+	template_name = "subtemplate/journal_entry.html"
 
 
 def filter_journal_tags(request, tag):
-    all_entries = Journal.objects.all()
-    entries = []
-    for entry in all_entries:
-        if entry.filter_by_tag(tag) is not None:
-            entries.append(entry)
+	all_entries = Journal.objects.all()
+	entries = []
+	for entry in all_entries:
+		if entry.filter_by_tag(tag) is not None:
+			entries.append(entry)
 
-    data = {"entries": entries, "tag": tag}
-    return render(request, "subtemplate/filter_tags.html", data)
+	data = {"entries": entries, "tag": tag}
+	return render(request, "subtemplate/filter_tags.html", data)
 
 
 def delete_entry(request, id):
-    Journal.objects.get(id=id).delete()
-    return HttpResponseRedirect(reverse("entries"))
+	Journal.objects.get(id=id).delete()
+	return HttpResponseRedirect(reverse("entries"))
