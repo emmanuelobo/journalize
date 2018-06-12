@@ -12,12 +12,12 @@ from journalize.settings import BASE_DIR, MEDIA_URL
 from .forms import JournalForm
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import Journal, Tag
+from .utils import get_location
 
 logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-4s [%(filename)s:%(lineno)d] %(message)s',
     datefmt='%d-%m-%Y:%H:%M:%S',
     level=logging.DEBUG)
 logger = logging.getLogger('journalize')
-
 
 class JournalList(LoginRequiredMixin, ListView):
 	login_url = "/login/"
@@ -26,10 +26,8 @@ class JournalList(LoginRequiredMixin, ListView):
 	context_object_name = "entries"
 	model = Journal
 	template_name = "subtemplate/journal_entries.html"
-	logger.info('Inside JournalList \n \n')
 
 	def get_queryset(self):
-		logger.info('Inside JournalList')
 		journals = Journal.objects.filter(writer=self.request.user, is_draft=False)
 		return journals
 
@@ -96,55 +94,15 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 	form_class = JournalForm
 
 	def form_valid(self, form):
-		try:
-			logger.info("inside form_valid() method")
-			journal = form.save(commit=False)
-			journal.writer = self.request.user
-			coordinates = form.cleaned_data["location"]
-			tags = form.cleaned_data["tags"]
-			locator = Nominatim()
-			print(locator.reverse(coordinates).raw["address"])
-		except Exception:
-			print('GeocoderInsufficientPrivileges')
-
-		try:
-			location = "{}, {}".format(
-				locator.reverse(coordinates).raw["address"]["city"],
-				locator.reverse(coordinates).raw["address"]["state"],
-			)
-
-		except KeyError:
-			try:
-				location = "{}, {}".format(
-					locator.reverse(coordinates).raw["address"]["town"],
-					locator.reverse(coordinates).raw["address"]["state"],
-				)
-
-			except KeyError:
-				try:
-					location = "{}, {}".format(
-						locator.reverse(coordinates).raw["address"]["village"],
-						locator.reverse(coordinates).raw["address"]["state"],
-					)
-
-				except KeyError:
-					try:
-						location = "{}, {}".format(
-							locator.reverse(coordinates).raw["address"]["locality"],
-							locator.reverse(coordinates).raw["address"]["state"],
-						)
-
-					except KeyError:
-						location = "{}, {}".format(
-							locator.reverse(coordinates).raw["address"]["county"],
-							locator.reverse(coordinates).raw["address"]["state"],
-						)
-
-			if location != "ERROR":
-				journal.location = location
+		logger.info("inside form_valid() method")
+		journal = form.save(commit=False)
+		journal.writer = self.request.user
+		latitude, longitude = form.cleaned_data["location"].split(',')
+		tags = form.cleaned_data["tags"]
+		location = get_location(latitude, longitude)
+		journal.location = location
 
 		journal.save()
-		print("Tags: {}".format(tags))
 		for tag in tags.split("|"):
 			if len(tag.split()) == 0:
 				pass
