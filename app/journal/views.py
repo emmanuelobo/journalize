@@ -94,7 +94,6 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 	form_class = JournalForm
 
 	def form_valid(self, form):
-		logger.info("inside form_valid() method")
 		journal = form.save(commit=False)
 		journal.writer = self.request.user
 		latitude, longitude = form.cleaned_data["location"].split(',')
@@ -112,7 +111,8 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 		return HttpResponseRedirect(reverse("entries"))
 
 	def form_invalid(self, form):
-		print("Invalid Form")
+		logger.error("Invalid Form Submission")
+		logger.error(form.errors)
 		return HttpResponseRedirect(reverse("create_entry"))
 
 
