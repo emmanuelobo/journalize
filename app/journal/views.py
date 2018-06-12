@@ -54,17 +54,14 @@ class EditEntry(UpdateView):
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.writer = self.request.user
-		# self.object.image.save(name=form.cleaned_data['image'], content='media/BeStill.jpg')
-		# form.clean()
-		# self.object.image.save(form.cleaned_data['image'], File(open(os.path.join(BASE_DIR, 'media') + '\\' + 'BeStill.jpg', 'rb')))
-		# print(form.cleaned_data['image'])
-		# self.object.image.path = '/media/BoardWalk.jpeg'
+		logger.info(f'\n Image: {form.cleaned_data["image"]}')
 		self.object.save()
 		return super(EditEntry, self).form_valid(form)
 
 	def form_invalid(self, form):
-		print(form.errors)
-		raise BaseException
+		logger.error("Invalid Form Submission")
+		logger.error(form.errors)
+		return HttpResponseRedirect('edit_entry')
 
 
 class PublishEntry(ListView):
