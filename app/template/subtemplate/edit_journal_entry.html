@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Journal Entry</title>
+    <link rel="stylesheet" href="{% static 'css/dropify.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
 </head>
 <body>
@@ -21,8 +22,10 @@
 </div>
 </body>
 </html>
+    <script src="{% static 'js/dropify.js' %}"></script>
     <script src= "{% static 'js/simplemde.min.js' %}"></script>
     <script>
+        $('.dropify').dropify();
         var simplemde = new SimpleMDE();
     </script>
 {% endblock %}

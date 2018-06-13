@@ -1,6 +1,6 @@
 import os
 import logging
-
+from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files import File
 from django.http import HttpResponseRedirect
@@ -50,6 +50,7 @@ class EditEntry(UpdateView):
 	pk_url_kwarg = "id"
 	success_url = reverse_lazy("entries")
 	form_class = JournalForm
+	logger.info(form_class)
 
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
@@ -100,9 +101,7 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 
 		journal.save()
 		for tag in tags.split("|"):
-			if len(tag.split()) == 0:
-				pass
-			else:
+			if len(tag.split()) > 0:
 				Tag.objects.create(name=tag, journal=journal)
 
 		return HttpResponseRedirect(reverse("entries"))

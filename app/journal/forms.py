@@ -25,7 +25,12 @@ class JournalForm(ModelForm):
             }
         ),
     )
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(required=False, widget=forms.FileInput(
+            attrs={
+                "class": "dropify",
+                # "data-default-file": ,
+            }) 
+    )
     location = forms.CharField(
         required=False, widget=forms.TextInput(attrs={"type": "hidden"})
     )

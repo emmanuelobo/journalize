@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Write Entry</title>
+    <link rel="stylesheet" href="{% static 'css/dropify.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/taggle.min.css' %}">
 </head>
@@ -40,10 +41,12 @@
 {% endblock content %}
 
 {% block footer_javascript %}
-<script src= "{% static 'js/simplemde.min.js' %}"></script>
+<script src="{% static 'js/dropify.js' %}"></script>
+<script src="{% static 'js/simplemde.min.js' %}"></script>
 <script src="{% static 'js/location.js'%}"></script>
 <script src="{% static 'js/taggle.js'%}"></script>
 <script>
+    $('.dropify').dropify();
     var simplemde = new SimpleMDE();
     var taggle = new Taggle('entry-tags-section', {
         duplicateTagClass: 'bounce'
