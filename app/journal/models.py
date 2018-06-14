@@ -37,7 +37,7 @@ class Journal(models.Model):
         :return:
         """
         if len(self.text) < 200:
-            return self.text
+            return self.text.strip('**')
 
         return "{}...".format(self.text[:200])
 
