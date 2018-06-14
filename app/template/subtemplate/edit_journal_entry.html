@@ -16,7 +16,7 @@
         {% csrf_token %}
 
         {{ form }}
-        <input type="hidden" name="image" value="{{object.image}}">
+
         <input type="submit" class="btn" value="Save">
     </form>
 </div>
@@ -28,8 +28,7 @@
             $('.dropify').attr('data-default-file','\\' + 'media\\' + '{{object.image}}')
         $('.dropify').dropify({
             tpl: {
-                message: '<div class="dropify-message"><span class="file-icon" /> <p>Edit Image Upload</p></div>',
-                filename: '<p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner">{{object.image}}</span></p>',
+                message: '<div class="dropify-message"><span class="file-icon" /> <p>Drag and drop or click to replace</p></div>',
             }
         });
         var simplemde = new SimpleMDE();
