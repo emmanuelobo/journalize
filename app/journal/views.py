@@ -130,7 +130,6 @@ def filter_journal_tags(request, tag):
 
 
 def delete_entry(request, id):
-	logger.info(f'\n \n Journal ID: {id} \n \n')
 	Journal.objects.get(id=id).delete()
 	data = {'message': 'Journal entry successfully deleted.'}
 	return JsonResponse(data)

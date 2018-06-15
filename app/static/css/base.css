@@ -55,3 +55,7 @@ i.material-icons:hover {
     position: relative !important;
     top: 35px !important;
 }
+
+.delete-entry-btn{
+    cursor: hand;
+}

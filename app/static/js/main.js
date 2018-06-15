@@ -18,9 +18,10 @@ function getError(error) {
 
 getLocation();
 
-function ajaxCall(url, obj, callback){
+function ajaxCall(url, method, obj, callback){
     $.ajax({
         url: window.location.origin + url,
+        method: method,
         dataType: 'json',
         success: callback(obj),
         error: function(error){
