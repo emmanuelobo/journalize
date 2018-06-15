@@ -59,8 +59,8 @@ class EditEntry(UpdateView):
 		return super(EditEntry, self).form_valid(form)
 
 	def form_invalid(self, form):
-		logger.error("Invalid Form Submission")
-		logger.error(form.errors)
+		logger.exception("Invalid Form Submission")
+		logger.exception(form.errors)
 		return HttpResponseRedirect('edit_entry')
 
 
@@ -106,8 +106,8 @@ class CreateEntry(LoginRequiredMixin, CreateView):
 		return HttpResponseRedirect(reverse("entries"))
 
 	def form_invalid(self, form):
-		logger.error("Invalid Form Submission")
-		logger.error(form.errors)
+		logger.exception("Invalid Form Submission")
+		logger.exception(form.errors)
 		return HttpResponseRedirect(reverse("create_entry"))
 
 
