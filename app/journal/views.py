@@ -3,7 +3,7 @@ import logging
 from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files import File
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from geopy import Nominatim
@@ -55,7 +55,6 @@ class EditEntry(UpdateView):
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.writer = self.request.user
-		logger.info(f'\n Image: {form.cleaned_data["image"]}')
 		self.object.save()
 		return super(EditEntry, self).form_valid(form)
 
@@ -131,5 +130,7 @@ def filter_journal_tags(request, tag):
 
 
 def delete_entry(request, id):
+	logger.info(f'\n \n Journal ID: {id} \n \n')
 	Journal.objects.get(id=id).delete()
-	return HttpResponseRedirect(reverse("entries"))
+	data = {'message': 'Journal entry successfully deleted.'}
+	return JsonResponse(data)

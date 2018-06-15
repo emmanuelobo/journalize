@@ -41,7 +41,9 @@
 
                 <a href="{% url 'edit_entry' entry.id %}"><i class="material-icons">edit</i></a>
 
-                <a href="{% url 'delete_entry' entry.id %}"><i class="material-icons">delete_forever</i></a>
+                <a onClick="ajaxCall('{% url 'delete_entry' entry.id %}', this, deleteEntryAnimation)" >
+                    <i class="material-icons">delete_forever</i>
+                </a>
 
             </div>
           </div>
