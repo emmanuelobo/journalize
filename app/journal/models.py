@@ -1,4 +1,5 @@
 from django.db import models
+import re
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from geopy import Nominatim
@@ -23,9 +24,9 @@ class Journal(models.Model):
         return "%s by %s (%s)" % (self.title, self.writer, self.created_at)
 
     @property
-    def mood(self):
+    def tone(self):
         """
-        The overall mood of the entry.
+        The overall tone of the entry.
         :return:
         """
         pass
@@ -36,8 +37,9 @@ class Journal(models.Model):
         Show a preview of the entry.
         :return:
         """
+        self.text = re.sub('\W+',' ', self.text) # strip all special characters
         if len(self.text) < 200:
-            return self.text.strip('**')
+            return self.text
 
         return "{}...".format(self.text[:200])
 
