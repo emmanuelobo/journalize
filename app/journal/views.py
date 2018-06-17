@@ -50,7 +50,6 @@ class EditEntry(UpdateView):
 	pk_url_kwarg = "id"
 	success_url = reverse_lazy("entries")
 	form_class = JournalForm
-	logger.info(form_class)
 
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
