@@ -8,7 +8,7 @@ Journalize is your own personal online journal. Take note of all the important (
 ### Clone repo
 Clone the repository to your local
 
-https://github.com/EmmanuelObo/journalize.git
+https://github.com/emmanuelobo/journalize.git
 
 
 ### Setup Virtual Env
@@ -18,6 +18,7 @@ Create a python virtual environment either using virtualenv or pipenv (recommend
 ### Activate virtual environment
 Wherever your virtual environment was created, there is a Scripts folder inside the main folder. Inside the Scripts folder you will see a Lib folder that contains a script activate.bat.
 Run that script inside your terminal from your journalize project location to activate the virtual environment for that project.
+
 
 ### Install Dependencies
 Inside the app folder there will be a file called requirements.txt.
