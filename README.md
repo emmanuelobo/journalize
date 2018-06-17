@@ -36,4 +36,4 @@ Then navigate to localhost:8080 and the server should be live
 ### Start Journalizing!
 Create your first entry by clicking the plus button at the bottom right of your screen.
 
-![journalize demo](app\static\images\ezgif.com-crop.gif)
+![journalize demo](https://github.com/emmanuelobo/journalize/blob/dev/app/static/images/ezgif.com-crop.gif)
