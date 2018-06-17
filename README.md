@@ -31,7 +31,7 @@ To run the app enter the following script:
 
 `python manage.py runserver`
 
-Then navigate to localhost:8080 and the server should be live
+Then navigate to localhost:8000 (or http://127.0.0.1:8000) and the server should be live
 
 ### Start Journalizing!
 Create your first entry by clicking the plus button at the bottom right of your screen.
