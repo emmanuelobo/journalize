@@ -1,20 +1,35 @@
 .main-container{
     margin: auto;
-    width: 80%;
+    width: 75%;
 }
 
-.journal-title{
+.journal-preview-title{
     text-align: center;
     font-family: 'Quicksand', sans-serif;
+    margin-bottom: 2rem;
 }
 
-.journal-body{
-    font-size: 18px;
-    font-family: Candara, sans-serif;
+.journal-header{
+    text-align: center;
+    margin-bottom: 5em;
+}
+
+.journal-preview-body{
+    font-size: 15px;
+    font-family: 'Alegreya Sans', sans-serif;
+    /* font-family: 'Archivo Narrow', sans-serif;
+    font-family: 'Armata', sans-serif;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Gentium Basic', serif;
+    font-family: 'Hind Madurai', sans-serif;
+    font-family: 'Karla', sans-serif;
+    font-family: 'Khand', sans-serif;
+    font-family: 'Khula', sans-serif; */
 }
 
 .read-time{
-    font-size: 12px;
+    font-size: 11px;
     color: rgb(107, 165, 162);
     font-family: 'Exo', sans-serif;
 }

@@ -13,25 +13,27 @@
     <title>{{entry.title}} | Journalize</title>
 </head>
 <body>
-    <div class="main-container">
-        <div class="journal-title">
-            {% if entry.image %}
-            <div class="header">
-                <img src="\media\{{entry.image}}" width="600" height="400" alt="image" style="margin-top: 20px;">
-                <h1 class="entry-title">{{entry.title}}</h1>
+    <div class="body">
+
+        <div class="main-container">
+                {% if entry.image %}
+                <div class="journal-header">
+                    <h1 class="journal-preview-title">{{entry.title}}</h1>
+                    <img src="\media\{{entry.image}}" width="600" height="400" alt="image" style="margin-top: 20px;">
+                </div>
+                {% else %}
+                    <h1 class="journal-header journal-preview-title">{{entry.title}}</h1>
+                {% endif %}
+
+            <div class="journal-preview-body">
+                <p>{{entry.get_text_as_markdown}}</p>
             </div>
-            {% else %}
-                <h1>{{entry.title}}</h1>
-            {% endif %}
 
-        </div>
-
-        <div class="journal-body">
-            <p>{{entry.get_text_as_markdown}}</p>
         </div>
 
     </div>
-
+<!-- TODO: add tags -->
+<!-- TODO: change fonts -->
 </body>
 </html>
 

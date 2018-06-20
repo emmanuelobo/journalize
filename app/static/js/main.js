@@ -32,5 +32,5 @@ function ajaxCall(url, method, obj, callback){
 
 function deleteEntryAnimation(obj)
 {
-    console.log($(obj).closest('.col-md-3').toggle(1000))
+    $(obj).closest('.col-md-3').toggle(1000) // delete entry animation
 }
