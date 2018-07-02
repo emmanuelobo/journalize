@@ -1,11 +1,13 @@
 .main-container{
     margin: auto;
     width: 75%;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .journal-preview-title{
     text-align: center;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Hind Madurai', sans-serif;
     margin-bottom: 2rem;
 }
 
@@ -16,16 +18,8 @@
 
 .journal-preview-body{
     font-size: 15px;
-    font-family: 'Alegreya Sans', sans-serif;
-    /* font-family: 'Archivo Narrow', sans-serif;
-    font-family: 'Armata', sans-serif;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-family: 'Dosis', sans-serif;
-    font-family: 'Gentium Basic', serif;
-    font-family: 'Hind Madurai', sans-serif;
-    font-family: 'Karla', sans-serif;
-    font-family: 'Khand', sans-serif;
-    font-family: 'Khula', sans-serif; */
+    line-height: 27px;
+    font-family: 'Karla', sans-serif; 
 }
 
 .read-time{
@@ -50,4 +44,16 @@ a:hover{
 .no-entries{
     display: inline;
     text-align: center;
+}
+
+.side-menu{
+    width: 15%;
+    border: 1px solid black;
+    background-color: lightblue;
+    position: absolute;
+    height: 100%;
+}
+
+.side-menu-content{
+
 }
