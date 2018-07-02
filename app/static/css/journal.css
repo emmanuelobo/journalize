@@ -1,6 +1,4 @@
 .main-container{
-    margin: auto;
-    width: 75%;
     height: 100%;
     overflow-y: scroll;
 }
@@ -48,12 +46,14 @@ a:hover{
 
 .side-menu{
     width: 15%;
-    border: 1px solid black;
-    background-color: lightblue;
-    position: absolute;
+    background-color: #f8f8f8;
     height: 100%;
 }
 
 .side-menu-content{
 
+}
+
+body{
+    overflow: hidden;
 }

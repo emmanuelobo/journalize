@@ -14,27 +14,32 @@
 </head>
 <body>
     <div class="body">
-        <div class="side-menu">
-            <div class="side-menu-content">
-                <h3>Side Menu</h3>
-            </div>
-        </div>
-
-        <div class="main-container">
-                {% if entry.image %}
-                <div class="journal-header">
-                    <h1 class="journal-preview-title">{{entry.title}}</h1>
-                    <img src="\media\{{entry.image}}" width="600" height="400" alt="image" style="margin-top: 20px;">
+        <div class="row">
+        
+            <div class="side-menu col-md-2">
+                <div class="side-menu-content">
+                    <h3>Side Menu</h3>
                 </div>
-                {% else %}
-                    <h1 class="journal-header journal-preview-title">{{entry.title}}</h1>
-                {% endif %}
-
-            <div class="journal-preview-body">
-                <p>{{entry.get_text_as_markdown}}</p>
+            </div>
+    
+            <div class="main-container col-md-10">
+                    {% if entry.image %}
+                    <div class="journal-header">
+                        <h1 class="journal-preview-title">{{entry.title}}</h1>
+                        <img src="\media\{{entry.image}}" width="600" height="400" alt="image" style="margin-top: 20px;">
+                    </div>
+                    {% else %}
+                        <h1 class="journal-header journal-preview-title">{{entry.title}}</h1>
+                    {% endif %}
+    
+                <div class="journal-preview-body">
+                    <p>{{entry.get_text_as_markdown}}</p>
+                </div>
+    
             </div>
 
         </div>
+
 
     </div>
 <!-- TODO: add tags -->

@@ -59,3 +59,7 @@ i.material-icons:hover {
 .delete-entry-btn{
     cursor: hand;
 }
+
+.navbar{
+    z-index: 1;
+}
