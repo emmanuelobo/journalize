@@ -37,7 +37,7 @@ class Journal(models.Model):
         Show a preview of the entry.
         :return:
         """
-        self.text = re.sub('\W+',' ', self.text) # strip all special characters
+        self.text = re.sub('\W+',' ', self.text)  # strip all special characters
         if len(self.text) < 200:
             return self.text
 
@@ -79,6 +79,10 @@ class Journal(models.Model):
         for tag in self.tag_set.all():
             if tag.name == tag_name:
                 return self
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super.delete(self, *args, **kwargs)
 
 
 class Tag(models.Model):
