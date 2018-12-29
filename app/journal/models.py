@@ -82,7 +82,7 @@ class Journal(models.Model):
 
     def delete(self, *args, **kwargs):
         self.image.delete()
-        super.delete(self, *args, **kwargs)
+        super().delete(*args, **kwargs)
 
 
 class Tag(models.Model):
